@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "Đăng ký tài khoản";
+}
+
+<script src="~/static/js/validate_input.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="~/static/css/login.css" media="all">
+
+<style>
+    .invalid {
+        color: red;
+        font-size: 12px;
+    }
+
+    .input-error {
+        border: 1px solid red !important;
+        outline: 1px solid red !important;
+    }
+
+    div.form-item > label {
+        padding-top: 5px;
+        color: black !important;
+        display: block;
+        font-size: 15px !important;
+    }
+
+    div.form-item input {
+        margin-bottom: 5px;
+    }
+
+    div.form-btn {
+        margin-top: 5px;
+    }
+</style>
+<div class="alls">
+    <div class="alls-form">
+        <h4>ĐĂNG KÝ TÀI KHOẢN</h4>
+        @if (ViewBag.FailMsg != null)
+        {
+            <div class="alert alert-danger show">
+                <strong>@ViewBag.FailMsg</strong>
+            </div>
+        }
+        @using (Html.BeginForm("AddCustomer", "Login", FormMethod.Post, new { @class = "form-main", id = "form-1" }))
+        {
+            <div class="form-item">
+                <label>Tên đăng nhập: </label>
+                <input id="username" name="username" type="text" placeholder="Nhập tên...">
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-item">
+                <label>Họ tên: </label>
+                <input id="fullname" name="fullname" type="text" placeholder="Nhập họ tên...">
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-item">
+                <label>Số điện thoại: </label>
+                <input id="phone" name="phone" type="text" placeholder="Nhập số điện thoại...">
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-item">
+                <label>Địa chỉ: </label>
+                <input id="address" name="address" type="text" placeholder="Nhập địa chỉ...">
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-item">
+                <label>Mật khẩu: </label>
+                <input id="password" name="password" type="password" placeholder="Nhập mật khâu..." />
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-item">
+                <label>Nhập lại mật khẩu: </label>
+                <input id="cofirmpassword" name="cofirmpassword" type="password" placeholder="Nhập lại mật khẩu..." />
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-btn">
+                <button type="submit" class="form-submit">Đăng ký</button>
+                @Html.ActionLink("Đăng nhập", "Login", "Login", null, new { @class = "a-link" })
+            </div>
+
+            <div class="final-button">
+                <h5>Hoặc đăng nhập bằng</h5>
+                <div>
+                    <a href="" class="btn btn-twitter tw"> <i class="fab fa-twitter"></i>   Đăng nhập bằng Twitter</a>
+                    <a href="" class="btn  btn-facebook fb"> <i class="fab fa-facebook-f"></i>   Đăng nhập bằng facebook</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    Validator({
+        form: '#form-1',
+        formGroupSelector: '.form-item',
+        errorSelector: '.form-message',
+        rules: [
+            Validator.isRequired('#username', "Vui lòng nhập tên đầy đủ !"),
+            Validator.isRequired('#fullname', "Vui lòng nhập tên đầy đủ !"),
+            Validator.isRequired('#address', "Vui lòng nhập địa chỉ!"),
+            Validator.minLength('#password', 6),
+            Validator.isRequired('#cofirmpassword'),
+            Validator.isEqualPhone("#phone", 10),
+            Validator.isConfirmed('#cofirmpassword', function () {
+                return document.querySelector('#form-1 #password').value;
+            }, 'Mật Khẩu nhập lại không chính xác!'),
+        ]
+    })
+</script>

@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Chỉnh sửa tài khoản";
+}
+@model QuanLySieuThi.DTO.Customer
+<script src="~/static/js/validate_input.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="~/static/css/login.css" media="all">
+
+<style>
+    .invalid {
+        color: red;
+        font-size: 12px;
+    }
+
+    .input-error {
+        border: 1px solid red !important;
+        outline: 1px solid red !important;
+    }
+
+    div.form-item > label {
+        padding-top: 5px;
+        color: black !important;
+        display: block;
+        font-size: 15px !important;
+    }
+
+    div.form-item input {
+        margin-bottom: 5px;
+    }
+
+    div.form-btn {
+        margin-top: 5px;
+    }
+</style>
+<div class="alls">
+    <div class="alls-form">
+        <h4>CHỈNH SỬA TÀI KHOẢN</h4>
+        @if (ViewBag.SuccessMsg != null)
+        {
+            <div class="alert alert-success show">
+                <strong>@ViewBag.SuccessMsg</strong>
+            </div>
+        }
+        @using (Html.BeginForm("Edit", "Account", FormMethod.Post))
+        {
+            <form class="form-main" id="form-3">
+                <input id="text" name="ID" value="@ViewBag.Customer.ID" readonly type="hidden" placeholder="" />
+                <input id="text" name="password" value="@ViewBag.Customer.Password" readonly type="hidden" placeholder="" />
+                <input id="text" name="point" value="@ViewBag.Customer.AccumulatePoint" readonly type="hidden" placeholder="" />
+                <div class="form-item">
+                    <label>Tên đăng nhập: </label>
+                    <input id="username" name="username" readonly value="@ViewBag.Customer.UserName" type="text" placeholder="Nhập tên...">
+                    <span class="form-message"></span>
+                </div>
+
+                <div class="form-item">
+                    <label>Họ tên: </label>
+                    <input id="fullname" name="fullname" value="@ViewBag.Customer.Name" type="text" placeholder="Nhập họ tên...">
+                    <span class="form-message"></span>
+                </div>
+                <div class="form-item">
+                    <label>Số điện thoại: </label>
+                    <input id="phone" name="phone" value="@ViewBag.Customer.Phone" type="text" placeholder="Nhập số điện thoại...">
+                    <span class="form-message"></span>
+                </div>
+                <div class="form-item">
+                    <label>Địa chỉ: </label>
+                    <input id="address" name="address" value="@ViewBag.Customer.Address" type="text" placeholder="Nhập địa chỉ...">
+                    <span class="form-message"></span>
+                </div>
+                <div class="form-btn">
+                    <button type="submit" class="form-submit">Xác nhận</button>
+                </div>
+            </form>
+        }
+    </div>
+</div>
+
+<script>
+    Validator({
+        form: '#form-3',
+        formGroupSelector: '.form-item',
+        errorSelector: '.form-message',
+        rules: [
+            Validator.isRequired('#fullname', "Vui lòng nhập tên đầy đủ !"),
+            Validator.isRequired('#address', "Vui lòng nhập địa chỉ!"),
+            Validator.minLength('#password', 6),
+            Validator.isEqualPhone("#phone", 10)
+        ],
+        onSubmit: function (data) {
+            const form = document.getElementById("form-3");
+            const formData = new FormData(form)
+            fetch('/Account/Edit', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    console.log("fetch dữ liệu thành công lên server");
+                })
+                .catch(error => {
+                    console.log("fetch dữ liệu thất bại");
+                });
+        }
+    })
+</script>

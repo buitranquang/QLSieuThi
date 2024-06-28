@@ -1,0 +1,481 @@
+﻿@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .ega-product-xs-no-pd {
+        padding-top: 20px;
+    }
+</style>
+
+<main>
+
+    <div class="container ega-product-xs-no-pd" itemscope="" itemtype="http://schema.org/Product">
+
+        @if (ViewBag.FailMsg != null)
+        {
+            <div class="alert alert-danger show">
+                <strong>@ViewBag.FailMsg</strong>
+            </div>
+        }
+
+        <div class="row ega-product-page">
+            <!--left aside-->
+            <div class="col-xs-12 col-sm-12 col-md-9">
+                <div id="ega-product-app" class="ega-product-page-info-item ega-product-page-info">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+
+                            <div role="img">
+                                <a href="javascript:void(0)"
+                                   data-rel="prettyPhoto[product-gallery]">
+                                    <img id="main-img"
+                                         src="@ViewBag.product.Image_Url"
+                                         data-zoom-image="https://bizweb.dktcdn.net/thumb/large/100/172/033/products/sua-bot-pediasure-lon-1600g-1-org-4.jpg"
+                                         alt="" class="img-responsive center-block">
+                                </a>
+
+
+                                <div class="ega-top-img-slider" style="display: none;">
+                                    <div class="ega-close-fixed-img-slider">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </div>
+                                    <div class="ega-table-top-img-slider">
+                                        <div>
+                                            <div>
+                                                <div class="ega-hover-hand">
+                                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                                </div>
+                                            </div>
+                                            <div class="ega-td-80">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-xs-12 text-center">
+                                                            <img id="main-img-slider"
+                                                                 alt=""
+                                                                 src="https://bizweb.dktcdn.net/thumb/large/100/172/033/products/sua-bot-pediasure-lon-1600g-1-org-4.jpg"
+                                                                 class="img-responsive center-block">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="ega-hover-hand">
+                                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                                </div>
+                                                <div style="font-size: 16px;"><b>4/5</b></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <h1 class="ega-product-title">
+                                @ViewBag.product.Name
+                            </h1>
+                            <div itemscope="itemscope" itemtype="http://schema.org/Offer" class="ega-show-after"
+                                 style="display: block;">
+                                <strong itemprop="price"
+                                        class="ega-pr-page-price">
+                                    @if (ViewBag.eventDetail == null)
+                                    {
+
+                                        <script>
+
+                                        var formattedPrice = "@String.Format("{0:C0}đ", @ViewBag.product.UnitPrice)".replaceAll("Rp", "").replaceAll("$", "");
+                                        document.write(formattedPrice);
+                                        </script>
+                                    }
+                                    else
+                                    {
+                                        <script>
+                                            var formattedDiscount = "@String.Format("{0:C0}đ", @ViewBag.eventDetail.DiscountPrice)".replaceAll("Rp", "").replaceAll("$", "");
+                                            document.write(formattedDiscount);
+                                            var formattedPrice = "@String.Format("{0:C0}đ", @ViewBag.product.UnitPrice)".replaceAll("Rp", "").replaceAll("$", "");
+                                            document.write('  <s style="font-size: 14px; font-weight: 500">' + formattedPrice + '</s>');
+                                        </script>
+                                    }
+
+                                </strong>
+                                <meta itemprop="priceCurrency" content="VND"> <del itemprop="priceSpecification"
+                                                                                   class="ega-old-price-home" style="display: inline-block;"></del>
+                                <meta itemprop="priceCurrency" content="VND">
+
+                                @if (ViewBag.product.UnitInStock > 0)
+                                {
+                                    <span data-UnitInStock="@ViewBag.product.UnitInStock" itemscope="itemscope"
+                                          itemtype="http://schema.org/ItemAvailability" itemprop="supersededBy"
+                                          class="ega-avai-pr-page max-count-product">
+                                        còn hàng (@ViewBag.product.UnitInStock)
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span itemscope="itemscope"
+                                          itemtype="http://schema.org/ItemAvailability" itemprop="supersededBy"
+                                          class="ega-avai-pr-page out-of-stock">
+                                        Đã hết hàng
+                                    </span>
+                                }
+
+
+                            </div>
+
+                            <div role="giao-hang">
+                                <ul class="ega-pr-page-ul-policies">
+                                    <li>
+                                        <div class="ega-giao-hang-pr-page">
+                                            <h4>
+                                                <span class="ega-triangle-left">►</span>
+                                                Giao hàng:
+                                            </h4>
+                                            <p style="padding-left: 15px;">
+                                                Giao hàng nội thành trong vòng 2h.
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="ega-giao-hang-pr-page">
+                                            <h4>
+                                                <span class="ega-triangle-left">►</span>
+                                                Bảo hành:
+                                            </h4>
+                                            <p style="padding-left: 15px;">
+                                                Bảo hành theo phiếu bảo hành trong sản phẩm(nếu có)
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="ega-giao-hang-pr-page">
+                                            <h4>
+                                                <span class="ega-triangle-left">►</span>
+                                                Thanh toán:
+                                            </h4>
+                                            <p style="padding-left: 15px;">
+                                                Thanh toán bằng thẻ hoặc thanh toán khi nhận hàng.
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <form id="form-add-cart-product" role="add-cart" enctype="multipart/form-data"
+                                  action="/cart/add" method="post">
+                                <input type="hidden" name="variantId"
+                                       value="9843232">
+                                <div role="options" class="ega-show-after" style="display: block;">
+                                    <ul class="ega-ul-options">
+                                        <li><!----></li>
+                                    </ul>
+                                </div>
+                                @if (ViewBag.product.UnitInStock > 0)
+                                {
+                                    <div role="qty " class="qty-disable">
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <label class="ega-option-title">Số lượng</label>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <div class="input-group ega-qty-control">
+                                                    <div class="input-group-addon pre-sub">-</div>
+
+                                                    <input type="text" name="quantity" maxlength="4" id="exampleInputAmount"
+                                                           value="1" class="form-control">
+
+                                                    <div class="input-group-addon next-plus">+</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div role="btn" class="ega-btn-product-div" style="">
+
+                                        <button type="submit"
+                                                title="Cho vào giỏ hàng" class="btn ega-pr-page-add-cart">
+                                            <b>
+                                                MUA HÀNG
+                                            </b>
+                                        </button>
+
+                                    </div>
+                                }
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                    <ul id="color-schema" style="display: none;">
+
+                        <li data-title="đỏ" data-hex="#eb0707"></li>
+
+                        <li data-title="vàng" data-hex="#ebcc1a"></li>
+
+                        <li data-title="xanh" data-hex="#a1c600"></li>
+
+                        <li data-title="đen" data-hex="#0a0909"></li>
+
+                        <li data-title="nâu" data-hex="#571111"></li>
+
+                        <li data-title="hồng" data-hex="#db0da7"></li>
+
+                        <li data-title="cam" data-hex="#FF8040"></li>
+
+                        <li data-title="trắng" data-hex="#FFFFFF"></li>
+
+                    </ul>
+
+                </div>
+
+                <!--description-->
+
+
+
+                <div class="ega-product-page-info-item">
+
+
+                    <h5 class="ega-pr-page-vendor">
+                        Thương hiệu:
+                        <a href="/collections/vendors?query=Abbott" title="Abbott">Abbott</a>
+                    </h5>
+
+
+
+                    <h5 class="ega-pr-page-vendor">
+                        SKU:
+                        <i class="pd-sku">8664325698</i>
+                    </h5>
+
+
+
+
+                    <h5 class="ega-pr-page-vendor">
+                        Loại sản phẩm:
+                        <i>
+                            Sữa bột cho bé
+                        </i>
+                    </h5>
+
+                    <hr>
+
+                </div>
+
+
+            </div>
+
+            <!--right aside-->
+
+            <div class="col-xs-12 col-sm-12 col-md-3 ega-col-product-no-pd-left-dsk">
+                <div role="related-products" class="ega-product-page-info-item">
+                    <h4>
+                        SẢN PHẨM LIÊN QUAN
+                    </h4>
+
+                    <div class="related-product-items">
+
+                        <!----------Dùng vòng for lặp qua đây------------------->
+
+                        <div>
+                            <a class="ega-related-pr-page"
+                               href="/sua-bot-abbott-similac-iq-2-400g-cho-be-6-12-thang"
+                               title="Sữa bột Abbott Similac IQ 2 400g (cho bé 6-12 tháng)">
+                                <div>
+                                    <img class="img-responsive center-block"
+                                         src="//bizweb.dktcdn.net/thumb/compact/100/172/033/products/sua-bot-similac-iq-2-ht-400g-3-700x467-1.jpg?v=1491230749110"
+                                         alt="Sữa bột Abbott Similac IQ 2 400g (cho bé 6-12 tháng)">
+                                </div>
+                                <h4>
+                                    Sữa bột Abbott Similac IQ 2 400g (cho bé 6-12 tháng)
+                                </h4>
+
+                            </a>
+                        </div>
+
+                        <!----------------------------------------------------->
+
+                    </div>
+                </div>
+            </div><div class="comments">
+                @if (Session["currentUser"] != null)
+                {
+
+                    <h2>Comments:</h2>
+                    <ul id="comment-list"></ul>
+                    <form id="comment-form" method="POST" action="@Url.Action("Comment", "Product")">
+                        <input type="hidden" value="@ViewBag.product.ID" name="productID" />
+                        <label for="comment" name="">Comment:</label>
+                        <textarea id="comment" name="comment" class="form-control" required></textarea>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+
+                }
+                else
+                {
+                    <div><a href="/Login"> Đăng nhập </a> để có thể bình luận</div>
+                }
+                @foreach (var c in ViewBag.comments)
+                {
+
+                    <div class="comment">
+                        <div class="comment-header">
+                            <div class="comment-meta">
+                                @if (c.Customer != null)
+                                {
+                                    <span>@c.Customer.Name</span>
+                                    <span class="comment-date">@c.CreatedDate</span>
+                                }
+                                else
+                                {
+                                    <h5 class="ml-2">Tài khoản bị vô hiệu</h5>
+                                }
+                            </div>
+                        </div>
+                        <div class="comment-body">
+                            <p>@c.Content</p>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+
+
+
+</main>
+@if (ViewBag.eventDetail == null)
+{
+    <script>
+        var priceDouble = parseFloat(formattedPrice.replaceAll("Rp", "").replaceAll("$", "").replace(/[^0-9]/g, ""));
+    </script>
+}
+else
+{
+    <script>
+        var priceDouble = parseFloat(formattedDiscount.replaceAll("Rp", "").replaceAll("$", "").replace(/[^0-9]/g, ""));
+    </script>
+}
+
+
+<script>
+
+
+    /*////////////Script đẩy dữ liệu mua hàng lên CartController ///////////*/
+
+    var addcartElement = document.getElementsByClassName("ega-pr-page-add-cart")[0];
+    var titleElemet = document.getElementsByClassName("ega-product-title")[0].innerHTML;
+    var currentUrl = window.location.href;
+    var productID = currentUrl.match(/\/(\d+)$/)[1];
+    var nextElement = document.getElementsByClassName("next-plus")[0];
+    var preElement = document.getElementsByClassName("pre-sub")[0];
+    var inputElement = document.getElementById("exampleInputAmount");
+    var max = document.getElementsByClassName("max-count-product")[0];
+    var numberMax = max.innerHTML.match(/\d+/);
+    var urlElement = document.getElementById("main-img").getAttribute("src");
+
+
+
+    /*////////////Script đẩy dữ liệu mua hàng lên CartController ///////////*/
+
+    addcartElement.onclick = function () {
+        event.preventDefault()
+
+        let inputElement = document.getElementById("exampleInputAmount");
+
+
+        fetch('/Cart/AddCart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "productId": productID,
+                "productName": titleElemet.trim(),
+                "productPrice": priceDouble,
+                "productImg": urlElement,
+                "productQuality": inputElement.value
+
+            })
+        }).then(function (response) {
+            if (response.ok) {
+
+                fetch('/Cart/Count', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                }).then(function (response) {
+
+                    if (response.ok) {
+
+                        response.json().then(async function (data) {
+
+                            var countCartElement = document.getElementById("numberCart");
+                            countCartElement.innerHTML = data.cartCount;
+
+                            // Lưu giá trị vào Local Storage
+
+
+                            sessionStorage.setItem('cartItemCount', data.cartCount);
+
+                        });
+                    }
+                });
+
+
+            }
+        });
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    /*////////////Script cho nút tăng giảm số lượng sản phẩm /////*/
+
+
+
+    inputElement.oninput = function () {
+        if (parseInt(inputElement.value) > numberMax[0]) {
+            alert("Bạn không được nhập quá số lượng tồn kho của sản phẩm");
+            inputElement.value = 1;
+        }
+
+    }
+
+    inputElement.onblur = function () {
+        if (inputElement.value.trim() === "") {
+            inputElement.value = 1;
+        }
+    };
+
+
+    nextElement.onclick = function () {
+
+        if (parseInt(inputElement.value) <= parseInt(numberMax[0]) - 1)
+            inputElement.value = parseInt(inputElement.value) + 1;
+        else
+            alert("Số lượng sản phẩm vượt quá quy định");
+
+    }
+
+
+    preElement.onclick = function () {
+        if (parseInt(inputElement.value) > 1)
+            inputElement.value = parseInt(inputElement.value) - 1;
+        else
+            alert("Số lượng sản phẩm tối thiểu là 1");
+
+    }
+
+</script>

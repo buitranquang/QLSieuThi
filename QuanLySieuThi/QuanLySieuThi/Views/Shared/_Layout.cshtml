@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <!--css-->
+    <link href="~/static/css/plugins.css" rel="stylesheet" type="text/css" media="all">
+    <link href="~/static/css/bundle.css" rel="stylesheet" type="text/css" media="all">
+    <link href="~/static/css/cf-stylesheet.css" rel="stylesheet" type="text/css" media="all">
+    <link rel="stylesheet" type="text/css" href="~/static/css/jquery-ui.css" media="all">
+    <link rel="stylesheet" type="text/css" href="~/static/css/bpr.css" media="all">
+    <link rel="stylesheet" type="text/css" href="~/static/css/productReviews.css" media="all">
+    <script src="~/static/js/jquery1-12-4.js" type="text/javascript"></script>
+    <script src="~/static/js/carousel.js" type="text/javascript"></script>
+    <script src="~/static/js/all-Scripts.js" type="text/javascript" ></script>
+
+
+
+</head>
+<body style="margin-bottom: 0px;" onload="myFunction()">
+
+    <div id="main">
+        @RenderPage("~/Views/Shared/_Header.cshtml")
+
+        <main>
+            @RenderBody()
+        </main>
+
+        @RenderPage("~/Views/Shared/_Footer.cshtml")
+    </div>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

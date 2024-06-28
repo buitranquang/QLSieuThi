@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewBag.Title = "CustomerIndex";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@model QuanLySieuThi.DTO.Customer
+<style>
+    .search-buttons {
+        border-radius: 3px;
+        border: 1px solid black;
+        padding: 5px 10px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .text-right {
+        text-align: right !important;
+    }
+
+    .main-seach {
+        margin-bottom: 5px;
+        float: right;
+        top: 10px;
+        right: 10px;
+    }
+
+
+    body {
+        background: #f1f1f1;
+    }
+
+    div.all-tables {
+        border-collapse: collapse;
+        background-color: #fff;
+        padding: 20px 25px;
+        margin-left: 5%;
+        margin-top: 5%;
+        margin-right: 3%;
+    }
+
+    .btn-rounded {
+        width: 47px;
+    }
+
+    #userTable {
+        width: 100%;
+    }
+</style>
+
+@if (ViewBag.SuccessMsg != null)
+{
+    <div class="alert alert-success show">
+        <strong>@ViewBag.SuccessMsg</strong>
+    </div>
+}
+<div class="all-tables" style="overflow: scroll; height: 800px">
+    <div class="main-seach">
+        <span>Seach:</span>
+        <input type="text" onchange="searchUser()" id="searchInput" class="search-buttons" oninput="searchUser()">
+    </div>
+
+
+    <table id="userTable" class="table table-striped">
+        <tr>
+            <th>ID</th>
+
+            <th>Tên</th>
+            <th>Địa chỉ</th>
+            <th>SĐT</th>
+            <th>Điểm tích lũy</th>
+
+
+            <th class="text-right">Thao tác</th>
+        </tr>
+        <tbody>
+            @if (ViewBag.Customers != null)
+            {
+                foreach (var cus in ViewBag.Customers)
+                {
+                    <tr>
+                        <td>@cus.ID</td>
+                        <td>@cus.Name</td>
+                        <td>@cus.Address</td>
+                        <td>@cus.Phone</td>
+                        <td>@cus.AccumulatePoint</td>
+
+                        <td class="text-right">
+                            <a class="btn btn-outline-danger btn-rounded"><svg class="svg-inline--fa fa-trash fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"></path></svg><!-- <i class="fas fa-trash"></i> --></a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+
+    var searchInput = document.getElementById("searchInput")
+    var userTable = document.getElementById("userTable");
+
+    function searchUser() {
+        const searchTerm = searchInput.value.toLowerCase();
+
+        for (let i = 1; i < userTable.rows.length; i++) {
+            const productID = userTable.rows[i].cells[1].textContent.toLowerCase();
+            const productName = userTable.rows[i].cells[2].textContent.toLowerCase();
+
+            if (productID.includes(searchTerm) || productName.includes(searchTerm)) {
+                userTable.rows[i].style.display = ''; // Show the row
+            } else {
+                userTable.rows[i].style.display = 'none'; // Hide the row
+            }
+        }
+    }
+
+    document.querySelectorAll("#userTable tbody a").forEach(btn => {
+        btn.addEventListener("click", (evt) => {
+            if (confirm("Bạn có chắc loại bỏ khách hàng này không?")) {
+                const tr = evt.target.closest("tr");
+                console.log(tr);
+                const customerID = tr.querySelector("td:nth-child(1)").innerText;
+                console.log(customerID)
+                fetch(`@Url.Action("Delete", "Customer")`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ customerId: customerID })
+                }).then(response => {
+                    return response.json();
+                }).then(data => {
+                    if (data.redirectToUrl) {
+                        // Redirect to the specified URL
+                        window.location.href = data.redirectToUrl;
+                    } else {
+                        console.log(data.error);
+                    }
+                })
+                    .catch(error => console.log(error))
+            }
+        })
+    })
+
+</script>

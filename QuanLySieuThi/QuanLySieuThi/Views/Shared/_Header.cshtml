@@ -1,0 +1,243 @@
+﻿
+@{
+    var currentUser = Session["currentUser"] as QuanLySieuThi.DTO.Customer;
+}
+
+<style>
+    span.user-css {
+        background-color: white;
+    }
+
+    .user-css, .style-log {
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 12px;
+        color: black;
+        padding: 5px 7px;
+    }
+
+    span.user-css {
+        margin-left: 5px;
+    }
+
+    .style-log {
+        background-color: white;
+    }
+
+        .style-log:hover {
+            color: #ff4500;
+        }
+
+    ul.ul-style {
+        padding-left: 0px;
+        right: -41px;
+        top: 20px;
+        background-color: white;
+        position: absolute;
+        z-index: 99999;
+        list-style-type: none;
+        display: none;
+    }
+
+        ul.ul-style > li {
+            padding-left: 0px;
+            border-top: 1px solid black;
+            text-align: left;
+        }
+
+            ul.ul-style > li:hover {
+                border-top: 1px solid #ff4500;
+                background-color: #ff4500;
+                color: white;
+            }
+
+            ul.ul-style > li > a {
+                text-decoration: none;
+            }     
+
+    .show {
+        display: block;
+    }
+</style>
+
+<header class="header">
+    <div class="ega-top-header hidden-xs hidden-sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-2">
+                    <div class="ega-item-top-bar">
+
+                        <h1 class="h1-no-margin-padding">
+                            <span style="display: none">EGA Bách Hóa</span>
+                            <a href="@Url.Action("Index", "Home")" title="Siêu thị IT01">
+                                <img alt="Siêu thị IT01" src="~/static/image/logo.png"
+                                     class="ega-logo">
+                            </a>
+                        </h1>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="ega-item-top-bar">
+
+                        <form class="ega-form-search-top" role="search" method="get"
+                              action="/Home/CategoryProduct/">
+                            <div  class="ega-div-top-search">
+                                <input  autocomplete="off" name="search" type="search"
+                                       placeholder="Bạn muốn mua gì?" />
+                                <button type="submit">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="col-xs-4 text-right">
+                    <div class="ega-item-top-bar">
+                        <div class="ega-top-message">
+
+
+                            @if (currentUser != null)
+                            {
+                                <span style="margin-right:50px" class="hidden-xs ega-header-top-item">
+                                    <strong>Điểm: </strong>
+                                    <strong id ="point">@currentUser.AccumulatePoint</strong>
+                                </span>
+                            }
+                            else
+                            {
+                                <span style="margin-right:50px" class="hidden-xs ega-header-top-item">
+                                    <strong>Điểm: </strong>
+                                    <strong>0</strong>
+                                </span>
+                            }
+                            @if (currentUser == null)
+                            {
+                                <span class="hidden-xs ega-header-top-item">
+                                    @Html.ActionLink("Đăng ký", "Register", "Login", null, new { @class = "ega-a-account-header", style = "font-size: 12px" })
+                                    /@Html.ActionLink("Đăng nhập", "Index", "Login", null, new { @class = "ega-a-account-header", style = "font-size: 12px" })
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="hidden-xs ega-header-top-item">
+                                    <span class="user-css">Chào @currentUser.UserName !</span>
+
+                                    <span class="caret span-caret"></span>
+
+
+                                    <ul class="ul-style">
+                                        <li>@Html.ActionLink("Đăng xuất", "Logout", "Login", null, new { @class = "ega-a-account-header user-css " })</li>
+                                        <li>@Html.ActionLink("Thay đổi thông tin", "Index", "Account", null, new { @class = "ega-a-account-header user-css" })</li>
+                                        <li>@Html.ActionLink("Đổi mật khẩu", "ChangePassword", "Account", null, new { @class = "ega-a-account-header user-css" })</li>
+                                    </ul>
+                                </span>
+                            }
+
+
+
+                            <span class="ega-header-top-item ega-top-cart-sendo">
+                                <a class="ega-a-cart-icon-top" href="@Url.Action("Index", "Cart")"
+                                   title="cart">
+                                    <span class="glyphicon glyphicon-shopping-cart">
+
+                                    </span>
+                                    <span class="ega-a-cart-icon-top__number ega-header-top-item" id="numberCart">0</span>
+                                </a>
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--menu-->
+    <div>
+        <div class="navbar yamm navbar-default ega-menu-top">
+            <div class="container ega-container-header-sm">
+
+                <div id="ega-menu-deiv-top" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav" style="margin-bottom: 0;">
+
+                        @if (ViewBag.Categories != null)
+                        {
+                            foreach (var c in ViewBag.Categories)
+                            {
+                                <!--submenu-->
+                                <li class="dropdown yamm-fw ega-dropdown-menu li-ega-menu-no-mega">
+                                    <a href="@Url.Action(actionName: "CategoryProduct", controllerName: "Home", routeValues: new { categoryId = c.ID })" title="Sản phẩm"
+                                       data-toggle="dropdown" class="dropdown-toggle hidden-xs hidden-sm"
+                                       aria-expanded="true">
+                                        @c.Name
+                                        <b class="caret hidden-xs"></b>
+                                    </a>
+                                    <div class="visible-ega-table-xs ega-menu-xs-drop-down">
+                                        <a href="@Url.Action(actionName: "CategoryProduct", controllerName: "Home", routeValues: new { categoryId = c.ID })" title="Sản phẩm">
+                                            Sản phẩm
+                                        </a>
+                                        <a href="javascript:void(0)" class="ega-menu-right-down-ico">
+                                            <span class="">
+                                                <span class="glyphicon glyphicon-menu-down"></span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </li>
+                            }
+                        }
+                        <li class="dropdown yamm-fw ega-dropdown-menu li-ega-menu-no-mega">
+                            <a href="#" title="Sản phẩm"
+                               data-toggle="dropdown" class="dropdown-toggle hidden-xs hidden-sm"
+                               aria-expanded="true">
+                                Khác<b class="caret hidden-xs"></b>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</header>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Lấy giá trị từ Local Storage
+
+        var cartItemCount = sessionStorage.getItem("cartItemCount");
+
+
+        // Nếu giá trị không null hoặc undefined, cập nhật lại trên giao diện
+        if (cartItemCount != null && cartItemCount != undefined ) {
+            var countCartElement = document.getElementById("numberCart");
+            countCartElement.innerHTML = cartItemCount;
+        }
+    });
+
+    // script drop-down //
+
+
+    let dropDrownElement = document.getElementsByClassName("span-caret")[0];
+
+    if (dropDrownElement) {
+        dropDrownElement.onclick = function () {
+
+            let ulElement = document.getElementsByClassName("ul-style")[0];
+            console.log(ulElement.style.display)
+
+
+            ulElement.classList.toggle("show");
+
+
+
+        }
+    }
+    
+
+</script>

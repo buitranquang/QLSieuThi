@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "Sản phẩm cùng danh mục";
+}
+
+<h2>Category</h2>
+@foreach (var product in ViewBag.Products)
+{
+    @product.ProductID
+}

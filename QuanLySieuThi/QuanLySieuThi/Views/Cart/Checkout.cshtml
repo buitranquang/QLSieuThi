@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .div-view {
+        display: flex;
+        padding-top: 10px;
+        padding-bottom: 15px;
+        border-top: 1px solid #DDDDDD;
+        width: 100%;
+    }
+
+        .div-view > div {
+            margin-right: 0.5%;
+        }
+
+        .div-view div:first-child {
+            margin-left: auto;
+        }
+    .cart-null {
+        background-color: white;
+        padding: 20px 25px;
+        text-align:center;
+    }
+</style>
+
+<h2 class="cart-null">Đơn hàng đã được thanh toán</h2>
+<div class="div-view">
+    <div>
+        <a class="btn btn-default" href="@Url.Action("Index", "Home")">
+            <span class="glyphicon glyphicon-shopping-cart"></span> Tiếp tục mua sắm
+        </a>
+    </div>
+
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Lấy giá trị từ Local Storage
+        var cartItemCount = sessionStorage.getItem("cartItemCount");
+
+        // Nếu giá trị không null hoặc undefined, cập nhật lại trên giao diện
+        if (cartItemCount != null && cartItemCount != undefined) {
+            var countCartElement = document.getElementById("numberCart");
+            countCartElement.innerHTML = 0;
+
+            sessionStorage.setItem("cartItemCount", countCartElement.innerHTML);
+        }
+    });
+</script>

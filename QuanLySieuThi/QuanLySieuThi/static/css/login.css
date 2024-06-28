@@ -1,0 +1,109 @@
+﻿div.form-item {
+    width: 100%;
+}
+
+  
+
+    div.form-item input, select {
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box;
+        padding: 5px 3px;
+        margin-bottom: 5px;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    }
+
+
+        div.form-item input:hover {
+            border: 1px solid #6699FF;
+        }
+
+        div.form-item input:focus {
+            outline: 2px solid #6699FF;
+        }
+
+div.alls {
+    width: 75%;
+    background-color: white;
+    padding: 20px 25px;
+    margin: 0 auto;
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+div.alls-form {
+    width: 70%;
+    margin: 0 auto;
+}
+
+    div.alls-form > h4 {
+        text-align: center;
+    }
+
+form.form-main {
+    width: 100%;
+}
+
+div.form-btn > button {
+    background-color: #F36F36;
+    border: 1px solid #F36F36;
+    color: white;
+    border-radius: 2px;
+    margin-right: 10px;
+}
+
+    div.form-btn > button:hover {
+        background-color: #EE0000;
+    }
+
+div.final-button {
+    width: 100%;
+}
+
+.a-link:hover {
+    color: blue;
+}
+
+div.final-button > h5 {
+    text-align: center;
+}
+
+div.final-button > div {
+    width: 50%;
+    display: flex;
+    margin: 0 auto;
+}
+
+    div.final-button > div > a {
+        margin: 0px;
+        display: block;
+        width: 50%;
+        margin: 0.5%;
+        color: white;
+        font-weight: bold;
+        font-size: 11px;
+        padding: 12px 10px;
+    }
+
+.tw {
+    background-color: #23527c !important;
+    border-color: #23527c !important;
+}
+
+    .tw:hover {
+        color: red !important;
+    }
+
+.fb {
+    background-color: #DD0000 !important;
+    border-color: #DD0000 !important;
+}
+
+
+

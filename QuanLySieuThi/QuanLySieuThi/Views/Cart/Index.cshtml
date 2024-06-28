@@ -1,0 +1,464 @@
+﻿
+@{
+    ViewBag.Title = "cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    h1.cart-null {
+        font-size: 30px;
+        background-color: white;
+        padding: 20px 25px;
+        text-align: center;
+        width: 100%;
+        color: #CC6633;
+    }
+
+    div.row-width {
+        background-color: white;
+        margin-bottom: 50px;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+
+    .ega-footer {
+        margin-bottom: 0px;
+    }
+
+    .media-heading > a {
+        text-decoration: none;
+        margin-left: 10px;
+    }
+
+    .tr-view > td {
+        text-align: center;
+    }
+
+    div.media > .media-body {
+        padding-top: 30px;
+    }
+
+    .padding-view {
+        padding-top: 35px !important;
+    }
+
+    #exampleInputEmail1 {
+        margin-top: 20px;
+        width: 40px;
+        text-align: center;
+    }
+
+    .delete-view {
+        margin-top: 20px;
+    }
+
+    .subtotal-view {
+        font-size: 20px;
+        width: 150px;
+        padding-left: 0px;
+        margin-left: 0px;
+        color: #DD0000;
+    }
+
+    .sub-view {
+        text-align: right;
+        font-size: 20px;
+        font-weight: bold;
+        width: 100px;
+    }
+
+    .div-view {
+        display: flex;
+        padding-top: 10px;
+        padding-bottom: 15px;
+        border-top: 1px solid #DDDDDD;
+        width: 100%;
+    }
+
+        .div-view > div {
+            margin-right: 0.5%;
+        }
+
+        .div-view div:first-child {
+            margin-left: auto;
+        }
+
+    .text-cart {
+        color: #EE0000;
+    }
+
+    .flex-td {
+        display: flex !important;
+    }
+
+        .flex-td > div {
+            height: 34px !important;
+            margin-top: 20px;
+        }
+</style>
+
+<h2 class="text-center text-cart">Giỏ Hàng</h2>
+<div class="row row-width">
+    <div class="col-sm-12 col-md-10 col-md-offset-1">
+        @if (ViewBag.Cart == null || ViewBag.Cart.Count == 0)
+        {
+            <h1 class="cart-null">Không có sản phẩm nào trong giỏ</h1>
+
+            <div class="div-view">
+                <div>
+                    <a class="btn btn-default" href="@Url.Action("Index", "Home")">
+                        <span class="glyphicon glyphicon-shopping-cart"></span> Tiếp tục mua sắm
+                    </a>
+                </div>
+
+            </div>
+        }
+        else
+        {
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Số Lượng</th>
+                        <th>SL Tồn kho</th>
+                        <th class="text-center">Giá</th>
+                        <th class="text-center">Tổng</th>
+                        <th class="text-center">Thao Tác</th>
+                    </tr>
+                </thead>
+                <tbody class="all-subtotal">
+
+
+                    @foreach (var item in ViewBag.Cart)
+                    {
+                        <tr class="tr-view">
+
+                            <td class="col-sm-8 col-md-6">
+                                <div class="media">
+                                    <a class="thumbnail pull-left" href="#"> <img class="media-object" src="@item.Product.Image_Url" style="width: 72px; height: 72px;"> </a>
+
+                                    <div class="media-body">
+
+
+
+                                        @if (item.Product != null)
+                                        {
+                                            <h4 class="media-heading"><a href="#">@item.Product.Name</a></h4>
+                                        }
+                                        else
+                                        {
+                                            <h4 class="media-heading"><a href="#">lỗi không hiển thị</a></h4>
+                                        }
+
+                                    </div>
+
+                                </div>
+                            </td>
+
+                            <td class="col-sm-1 col-md-1 flex-td" style="text-align: center">
+                                <div class="input-group-addon pre-sub">-</div>
+                                <input data-id="@item.Product.ID" type="email" class="form-control value-quality" id="exampleInputEmail1" value="@item.Quantity.ToString()">
+                                <div class="input-group-addon next-plus">+</div>
+                            </td>
+                            <td class="col-sm-1 col-md-1 text-center padding-view "><strong class="UnitInStock">@item.Product.UnitInStock</strong></td>
+                            <td class="col-sm-1 col-md-1 text-center padding-view"><strong>@item.Price.ToString("N0") VNĐ</strong></td>
+                            <td class="col-sm-1 col-md-1 text-center padding-view"><strong class="subtotal">@((item.Quantity * item.Price).ToString("N0")) VNĐ</strong></td>
+                            <td class="col-sm-1 col-md-1">
+
+
+                                <a href="@Url.Action("DeleteCart", "Cart", new { productId = item.Product.ID })" class="btn btn-danger delete-view">
+                                    <span class="glyphicon glyphicon-remove "></span> Xóa
+                                </a>
+
+                            </td>
+                        </tr>
+                    }
+
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td class="text-right ">
+                            <a href="@Url.Action("Index", "Cart")" class="btn btn-success aUpdate">
+                                Cập nhật giỏ hàng
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+
+
+                        <td> <h4 style="font-weight:bold">Sử dụng tích điểm:</h4>  </td>
+
+
+                        <form id="myForm" method="post" action="@Url.Action("Checkout", "Cart")">
+
+                            <td style="display:flex; ">
+                                <div style="width: 20px; height: 34px; margin-top:20px" class="input-group-addon pre-amout">-</div>
+                                <input name="inputname" style="width:60px; margin-top:20px; text-align:center" type="email" class="form-control " id="input2" value="0">
+                                <div style="width: 20px; height: 34px; margin-top: 20px " class="input-group-addon plus-amout">+</div>
+                            </td>
+
+                        </form>
+
+                    </tr>
+
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h3 class="sub-view">Tổng tiền: </h3></td>
+                        <td class="text-right "><h3 class="subtotal-view"><strong id="strongSubtotal"> SUBTOTAL</strong></h3></td>
+                    </tr>
+
+
+
+
+                </tbody>
+            </table>
+
+            <div class="div-view">
+                <div>
+                    <a class="btn btn-default" href="@Url.Action("Index", "Home")">
+                        <span class="glyphicon glyphicon-shopping-cart"></span> Tiếp tục mua sắm
+                    </a>
+                </div>
+                <div>
+                    @if (Session["currentUser"] != null)
+                    {
+
+
+                        <button id="checkoutBtn" type="submit" class="btn btn-success">
+                            Thanh toán <span class="glyphicon glyphicon-play"></span>
+                        </button>
+
+
+                    }
+                    else
+                    {
+                        <span>Vui lòng <a href="@Url.Action("Login", "Login")">đăng nhập </a>để thanh toán</span>
+                    }
+
+                </div>
+
+            </div>
+
+        }
+
+
+
+    </div>
+</div>
+
+<script>
+    var tbodyElement = document.getElementsByClassName("all-subtotal")[0];
+    if (tbodyElement?.querySelectorAll("strong.subtotal") instanceof NodeList) {
+        var strongElements = tbodyElement.querySelectorAll("strong.subtotal");
+    }
+    var subTotal = document.getElementById("strongSubtotal")
+    var sum = 0;
+    if (strongElements) {
+        for (var i = 0; i < strongElements.length; i++) {
+            // Thực hiện các xử lý với các thẻ td có class là "subtotal" ở đây
+            // Ví dụ:
+            var newStrongElement = parseFloat(strongElements[i].innerHTML.replace(/[^0-9]/g, ""))
+            sum += newStrongElement;
+            subTotal.innerHTML = sum.toLocaleString().replaceAll(".", ",") + " VNĐ";
+        }
+    }
+    /////// thay đổi số lượng trên giỏ khi xoá giỏ //////////
+    var deleteCartElement = document.querySelectorAll(".delete-view")
+    if (deleteCartElement) {
+        deleteCartElement.forEach(function (link) {
+            link.addEventListener('click', function (event) {
+                var parentElemet = link.parentElement.parentElement;
+                var countQualityElement = parentElemet.getElementsByClassName("value-quality")[0];
+                // Lấy giá trị từ Local Storage
+                var cartItemCount = sessionStorage.getItem("cartItemCount");
+                var updatecart = document.getElementById("numberCart");
+                if (!isNaN(cartItemCount)) {
+                    updatecart.innerHTML -= parseInt(countQualityElement.value);
+
+                    sessionStorage.setItem('cartItemCount', updatecart.innerHTML);
+                }
+            });
+        });
+    }
+    /////// script update so luong san pham trong gio//////////
+    var cartItems = [...document.querySelectorAll('#exampleInputEmail1')].map(item => {
+
+        // xử lý phân khúc tăng giảm số lượng trong input
+        let parenItemtElement = item.parentElement;
+        let divElement = parenItemtElement.getElementsByTagName("div");
+        let quatity = parseInt(item.value);
+        let id = item.getAttribute("data-id");
+        let currentInputElement = parenItemtElement.parentElement.getElementsByClassName("UnitInStock")[0];
+        var amout = true;
+        let prevValueInput = item.value;
+        let currentValueInput = item.value;
+        let updateCartItems = (amout) => {
+
+            cartItems = cartItems.map(cartItem => {
+
+                if (cartItem.id === id) {
+                    return {
+                        id: cartItem.id,
+                        quantity: cartItem.quantity + amout
+                    };
+
+                } else {
+                    return cartItem;
+                }
+            });
+        };
+
+        item.oninput = function () {
+            if (parseInt(item.value) > parseInt(currentInputElement.innerHTML) || parseInt(item.value) <= 0) {
+                alert("Số lượng bạn nhập không hợp lệ");
+                item.value = currentValueInput;
+            }
+            else {
+
+                if (!Number.isNaN(parseInt(item.value))) {
+                    updateCartItems(parseInt(item.value) - parseInt(prevValueInput))
+                    prevValueInput = item.value;
+                }
+
+            }
+        }
+        item.onblur = function () {
+            if (item.value.trim() === "") {
+                item.value = currentValueInput;
+            }
+        };
+        for (let i = 0; i < divElement.length; i++) {
+            divElement[i].addEventListener("click", function () {
+
+
+                // Kiểm tra xem class 'pre' có trong classList hay không
+                if (this.classList.contains("next-plus")) {
+                    if (item.value < parseInt(currentInputElement.innerHTML)) {
+                        item.value = parseInt(item.value) + 1;
+
+                        updateCartItems(1)
+                        prevValueInput = item.value;
+
+                    }
+                    else {
+                        alert("Bạn không được nhập quá số lượng tồn kho ")
+                    }
+                }
+                else {
+                    if (item.value > 1) {
+                        item.value = parseInt(item.value) - 1;
+                        amout = false;
+                        updateCartItems(-1)
+                        prevValueInput = item.value;
+                    }
+                    else {
+                        alert("Số lượng đơn hàng tối thiểu là 1");
+                    }
+                }
+            })
+        }
+
+        return {
+            id: id,
+            quantity: quatity
+        }
+    })
+
+    var aUpdateElement = document.getElementsByClassName("aUpdate")[0];
+    let countProduct = 0;
+
+    aUpdateElement.onclick = function () {
+        /* event.preventDefault();*/
+        //Tạo một đối tượng dữ liệu để gửi lên server
+        var data = {
+            cartItems: cartItems
+        }
+
+        // Sử dụng fetch để gửi dữ liệu lên server
+        fetch('/Cart/UpdateCart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Nếu cập nhật giỏ hàng thành công, làm gì đó ở đây
+                 
+                    console.log("thanh cong")
+                } else {
+                    // Nếu có lỗi xảy ra khi cập nhật giỏ hàng, làm gì đó ở đây
+                }
+            })
+            .catch(error => {
+                console.error(error)
+            })
+    }
+    //Cập nhật product
+    for (let i = 0; i < cartItems.length; i++) {
+        countProduct += cartItems[i].quantity;
+    }
+    sessionStorage.setItem('cartItemCount', countProduct);
+ 
+
+    /// tich diem
+    var preMount = document.getElementsByClassName("pre-amout")[0];
+    var input2Element = document.getElementById("input2");
+    var plusMout = document.getElementsByClassName("plus-amout")[0];
+    var pointElement = document.getElementById("point");
+
+
+    preMount.onclick = function () {
+        if (parseInt(input2Element.value) != 0) {
+
+            input2Element.value = parseInt(input2Element.value) - 1000;
+        }
+        else {
+            alert("Điểm của bạn đang là 0");
+        }
+
+    }
+    
+    plusMout.onclick = function () {
+        if (parseInt(input2Element.value) < parseInt(pointElement.innerHTML) - 1000)
+            input2Element.value = parseInt(input2Element.value) + 1000;
+        else {
+            alert("bạn không được tăng quá số lượng tích điểm")
+        }
+    }
+
+     
+    document.addEventListener('DOMContentLoaded', function () {
+        var checkoutBtn = document.getElementById('checkoutBtn');
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', function () {
+                document.getElementById('myForm').submit();
+            });
+        }
+    });
+
+    let checkout = document.getElementById("checkoutBtn");
+    if (checkout) {
+        checkout.onclick = function () {
+            sessionStorage.setItem('cartItemCount', 0);
+        }
+    }
+    
+</script>
